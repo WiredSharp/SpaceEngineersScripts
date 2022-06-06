@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+      <!--
+    You can safely exclude this file from code repositories and use different
+    user settings per machine.
+    -->
+      <GameBinPath>D:\Jeux\SteamLibrary\steamapps\common\SpaceEngineers\Bin64</GameBinPath>
+  </PropertyGroup>
+
+   <ItemGroup>
+      <Reference Include="System.Collections.Immutable">
+         <HintPath>$(GameBinPath)\System.Collections.Immutable.dll</HintPath>
+         <Private>false</Private>
+      </Reference>
+      <Reference Include="Sandbox.Common">
+         <HintPath>$(GameBinPath)\Sandbox.Common.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="Sandbox.Game">
+         <HintPath>$(GameBinPath)\Sandbox.Game.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="Sandbox.Graphics">
+         <HintPath>$(GameBinPath)\Sandbox.Graphics.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="SpaceEngineers.Game">
+         <HintPath>$(GameBinPath)\SpaceEngineers.Game.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="SpaceEngineers.ObjectBuilders">
+         <HintPath>$(GameBinPath)\SpaceEngineers.ObjectBuilders.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage">
+         <HintPath>$(GameBinPath)\VRage.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Audio">
+         <HintPath>$(GameBinPath)\VRage.Audio.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Game">
+         <HintPath>$(GameBinPath)\VRage.Game.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Input">
+         <HintPath>$(GameBinPath)\VRage.Input.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Library">
+         <HintPath>$(GameBinPath)\VRage.Library.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Math">
+         <HintPath>$(GameBinPath)\VRage.Math.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Render">
+         <HintPath>$(GameBinPath)\VRage.Render.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Render11">
+         <HintPath>$(GameBinPath)\VRage.Render11.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+      <Reference Include="VRage.Scripting">
+         <HintPath>$(GameBinPath)\VRage.Scripting.dll</HintPath>
+         <Private>False</Private>
+      </Reference>
+   </ItemGroup>
+
+</Project>
