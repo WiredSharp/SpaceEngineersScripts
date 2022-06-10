@@ -293,6 +293,17 @@ namespace SpaceEngineersScripts.raycast
          }
       }
 
+      private enum HitRange {
+         // [0, 2 x p x bs) : require emergency stop as obstacle cannot be avoided
+         Danger,
+         // (2 x p x bs + p x e + 5] : retract by distance - currentLength
+         Retract,
+         // (2 x p x bs + p x e + 5 + 2xpxbs,  2 x p x bs + p x e + 7.5] : OK
+         InRange,
+         // > 2 x p x bs + p x e  + 7.5 : Extend by currentLength - distance
+         Extend
+      }
+
       private static Vector3D WorldToLocal(IMyTerminalBlock referenceBlock, Vector3D worldPosition) {
          Vector3D referenceWorldPosition = referenceBlock.WorldMatrix.Translation; //block.WorldMatrix.Translation is the same as block.GetPosition() btw
          //Convert worldPosition into a world direction
