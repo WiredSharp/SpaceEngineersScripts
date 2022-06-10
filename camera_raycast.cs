@@ -124,7 +124,7 @@ namespace SpaceEngineersScripts.raycast
             
             var distance = hitInfo.Value.Distance;
             output.AppendLine($"Hit (angle): {hitInfo.Value.Angle}");
-            output.AppendLine($"Hit (world): {hitInfo.Value.Position.X:F2} {hitInfo.Value.Position.Y:F2} {hitInfo.Value.Position.Z:F2}");
+            output.AppendLine($"Hit (local): {hitInfo.Value.LocalPosition.X:F2} {hitInfo.Value.LocalPosition.Y:F2} {hitInfo.Value.LocalPosition.Z:F2}");
             output.AppendLine($"distance: {distance}");
             float delta = distance - currentLength;
             if (Math.Abs(delta) > 1f)
@@ -206,7 +206,7 @@ namespace SpaceEngineersScripts.raycast
          {
             Echo("out of Camera Range !!");
          }
-         return minHitInfo.HasValue ? (HitDetectionInfo?)new HitDetectionInfo(camera.GetPosition(), minPitch, minHitInfo.Value) : null;
+         return minHitInfo.HasValue ? (HitDetectionInfo?)new HitDetectionInfo(camera, minPitch, minHitInfo.Value) : null;
       }
 
       bool RefreshBlocks()
@@ -278,20 +278,29 @@ namespace SpaceEngineersScripts.raycast
       private struct HitDetectionInfo
       {
          public readonly Vector3D Position;
+         public readonly Vector3D LocalPosition;
          public readonly float Distance;
          public readonly MyDetectedEntityType Type;
          public readonly float Angle;
 
-         public HitDetectionInfo (Vector3D camera, float cameraRayCastAngle, MyDetectedEntityInfo hitInfo)
+         public HitDetectionInfo (IMyTerminalBlock camera, float cameraRayCastAngle, MyDetectedEntityInfo hitInfo)
          {
             Position = hitInfo.HitPosition.Value;
-            var cosinus = cameraRayCastAngle == 0f ? 1f : (float)Math.Cos(MathHelper.ToRadians(cameraRayCastAngle));
-            Distance = (float)Vector3D.Distance(camera, hitInfo.HitPosition.Value) * cosinus;
+            LocalPosition = WorldToLocal(camera, Position);
+            Distance = LocalPosition.X;
             Type = hitInfo.Type;
             Angle = cameraRayCastAngle;
          }
       }
 
+      private static Vector3D WorldToLocal(IMyTerminalBlock referenceBlock, Vector3D worldPosition) {
+         Vector3D referenceWorldPosition = referenceBlock.WorldMatrix.Translation; //block.WorldMatrix.Translation is the same as block.GetPosition() btw
+         //Convert worldPosition into a world direction
+         Vector3D worldDirection = worldPosition - referenceWorldPosition ; //this is a vector starting at the reference block pointing at your desired position
+         //Convert worldDirection into a local direction
+         return Vector3D.TransformNormal(worldDirection, MatrixD.Transpose(referenceBlock.WorldMatrix)); //note that we transpose to go from world -> body
+      }
+      
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //////////////////////////////////////////////////////////////////////////////////////////////////////////
